@@ -19,11 +19,53 @@ export default function ConnexionPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [filiere, setFiliere] = useState("");
+  const [promo, setPromo] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => router.push("/"), 1200);
+    setError("");
+    setSuccess("");
+
+    try {
+      const endpoint = tab === "login" ? "/api/auth/login" : "/api/auth/register";
+      const payload = tab === "login"
+        ? { email, password }
+        : { name, email, password, filiere, promo };
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Une erreur est survenue");
+      }
+
+      if (tab === "login") {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        router.push("/dashboard");
+        return;
+      }
+
+      setSuccess("Compte créé avec succès. Vous pouvez maintenant vous connecter.");
+      setTab("login");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setFiliere("");
+      setPromo("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -197,18 +239,39 @@ export default function ConnexionPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wide">Filière</label>
-                  <select className="input-modern text-sm">
+                  <select
+                    value={filiere}
+                    onChange={(e) => setFiliere(e.target.value)}
+                    className="input-modern text-sm"
+                    required
+                  >
                     <option value="">Choisir...</option>
                     <option>BT-EMIH</option><option>BT-EREE</option><option>BGIS</option><option>ANC</option><option>Centrale-2iE</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wide">Année</label>
-                  <select className="input-modern text-sm">
+                  <select
+                    value={promo}
+                    onChange={(e) => setPromo(e.target.value)}
+                    className="input-modern text-sm"
+                    required
+                  >
                     <option value="">Choisir...</option>
                     <option>L1</option><option>L2</option><option>L3</option><option>M1</option><option>M2</option>
                   </select>
                 </div>
+              </div>
+            )}
+
+            {error && (
+              <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+                {success}
               </div>
             )}
 
