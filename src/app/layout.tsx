@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ChatWidgetWrapper from "@/components/ChatWidgetWrapper";
 
 export const metadata: Metadata = {
   title: "2iE Connect — Plateforme Numérique des Étudiants 2iE",
@@ -15,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" data-theme="2ie">
-      <body className="font-sans antialiased bg-base-100">{children}</body>
+      <body className="font-sans antialiased bg-base-100">
+        {children}
+        <ChatWidgetWrapper />
+      </body>
     </html>
   );
 }
