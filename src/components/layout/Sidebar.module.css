@@ -1,0 +1,53 @@
+.sidebar {
+  width: 240px; height: 100vh; background: white;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+}
+.logoContainer {
+  padding: 1.25rem 1.125rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.75rem; position: relative;
+}
+.logoBox {
+  width: 40px; height: 40px; border-radius: 10px; background: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 13px; color: white; flex-shrink: 0;
+}
+.logoTitle { font-size: 13px; font-weight: 800; color: var(--text-main); }
+.logoSub { font-size: 10px; color: var(--text-muted); }
+.logoBadge {
+  position: absolute; bottom: 12px; left: 44px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--yellow));
+  border: 2px solid white;
+}
+.nav { flex: 1; padding: 0.875rem 0.625rem; display: flex; flex-direction: column; overflow-y: auto; }
+.navSection { display: flex; flex-direction: column; gap: 2px; }
+.navItem {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.625rem 0.875rem; border-radius: 10px;
+  color: var(--text-muted); font-size: 0.875rem; font-weight: 500;
+  transition: all 150ms ease; border-left: 3px solid transparent;
+}
+.navItem:hover { background: var(--background); color: var(--text-main); }
+.active_blue { background: var(--blue-light)!important; color: var(--blue)!important; border-left-color: var(--blue)!important; font-weight: 700!important; }
+.active_green { background: var(--green-light)!important; color: var(--green)!important; border-left-color: var(--green)!important; font-weight: 700!important; }
+.active_yellow { background: var(--yellow-light)!important; color: #b07a10!important; border-left-color: var(--yellow)!important; font-weight: 700!important; }
+.active_red { background: var(--red-light)!important; color: var(--red)!important; border-left-color: var(--red)!important; font-weight: 700!important; }
+.navIcon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.divider { height: 1px; background: var(--border); margin: 0.75rem 0; }
+.footer { padding: 0.875rem 0.75rem; border-top: 1px solid var(--border); }
+.colorBar { display: flex; height: 4px; border-radius: 4px; overflow: hidden; margin-bottom: 0.875rem; }
+.colorBar > div { flex: 1; }
+.userCard { display: flex; align-items: center; gap: 0.625rem; padding: 0.625rem 0.75rem; background: var(--background); border-radius: 10px; margin-bottom: 0.625rem; }
+.userAvatar { width: 30px; height: 30px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.userName { font-size: 12px; font-weight: 700; color: var(--text-main); }
+.userSub { font-size: 10px; color: var(--text-muted); }
+.logoutBtn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; padding: 7px; background: none;
+  border: 1.5px solid rgba(200,16,46,0.2); border-radius: 10px;
+  font-size: 12px; font-weight: 600; color: var(--red); cursor: pointer; transition: all 200ms ease;
+}
+.logoutBtn:hover { background: var(--red-light); border-color: var(--red); }

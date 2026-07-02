@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("STUDENT")
+  filiere   String?
+  promo     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stages   Stage[]
+  annonces Annonce[]
+}
+
+model Ressource {
+  id         String   @id @default(cuid())
+  titre      String
+  type       String
+  filiere    String
+  fichierUrl String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Stage {
+  id         String   @id @default(cuid())
+  entreprise String
+  pays       String
+  domaine    String
+  contactSup String?
+  feedback   String?
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Annonce {
+  id        String   @id @default(cuid())
+  titre     String
+  contenu   String
+  auteurId  String
+  auteur    User     @relation(fields: [auteurId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GiveBack {
+  id          String   @id @default(cuid())
+  titre       String
+  description String
+  impact      String
+  etudiants   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  nom       String
+  role      String
+  email     String
+  telephone String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
